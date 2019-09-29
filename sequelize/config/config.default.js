@@ -8,6 +8,8 @@ module.exports = appInfo => {
 
   config.sequelize = {
     dialect: 'mysql', // support: mysql, mariadb, postgres, mssql
+    username: "root",
+    password: "123456",
     database: 'egg-sequelize-example-dev',
     host: '127.0.0.1',
     port: 3306,

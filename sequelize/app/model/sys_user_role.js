@@ -4,6 +4,11 @@ module.exports = (app) => {
   const { STRING} = app.Sequelize;
 
   const Sys_user_role = app.model.define("sys_user_role", {
+    id:{
+      type: STRING,
+      primaryKey: true,
+      allowNull: false
+    },
     userId: {
       type: STRING,
       allowNull: false

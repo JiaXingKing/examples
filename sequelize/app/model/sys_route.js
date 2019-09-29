@@ -3,19 +3,30 @@
 module.exports = (app) => {
   const { STRING, INTEGER, DATE, BOOLEAN, NOW } = app.Sequelize;
 
-  const Sys_role = app.model.define("sys_role", {
+  const Sys_route = app.model.define("sys_route", {
     id: {
       type: STRING,
       primaryKey: true,
       allowNull: false
     },
+    path: STRING(30),
     enName: STRING(30),
     chName: STRING(30),
-    status: {
+    isLeaf: {
       type: BOOLEAN,
-      defaultValue: true
     },
-    orgId:STRING(30),
+    customCode:STRING(30),
+    sortNo:{
+      type:INTEGER,
+      defaultValue: 0
+    },
+    parentId:{
+      type: STRING,
+    },
+    level:{
+      type:INTEGER,
+      defaultValue: 0
+    },
     created_at: {
       type: DATE,
       defaultValue: NOW
@@ -27,9 +38,8 @@ module.exports = (app) => {
     },
     updated_by: STRING(30)
   });
-  Sys_role.prototype.associate = function() {
-    app.model.Sys_role.hasMany(app.model.Sys_user_role, { as: 'sys_user_role' });
-    app.model.Sys_role.belongsTo(app.model.Sys_org, { as: 'sys_org' , foreignKey: 'orgId' });
+  Sys_route.prototype.associate = function() {
+    app.model.Sys_route.hasMany(app.model.Sys_role_route, { as: 'sys_role_route' });
   };
-  return Sys_role;
+  return Sys_route;
 };

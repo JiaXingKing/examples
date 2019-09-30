@@ -1,13 +1,14 @@
 "use strict";
 
 module.exports = (app) => {
-  const { STRING, INTEGER, DATE, BOOLEAN, NOW } = app.Sequelize;
+  const { STRING, INTEGER, DATE, BOOLEAN, NOW,UUID,UUIDV4 } = app.Sequelize;
 
   const Sys_user = app.model.define("sys_user", {
     id: {
-      type: STRING,
+      type: UUID                        ,
       primaryKey: true,
-      allowNull: false
+      allowNull: false,
+      defaultValue: UUIDV4
     },
     accountName: STRING(30),
     actualName: STRING(30),
@@ -22,19 +23,23 @@ module.exports = (app) => {
     },
     age: INTEGER,
     phone: STRING(30),
-    created_at: {
+    createdAt: {
       type: DATE,
       defaultValue: NOW
     },
-    create_by: STRING(30),
-    updated_at: {
+    createBy: STRING(30),
+    updatedAt: {
       type: DATE,
       defaultValue: NOW
     },
-    updated_by: STRING(30)
+    updatedBy: STRING(30)
+  },{
+    freezeTableName: true,
+    tableName: 'sys_user',
+    underscored: false
   });
   Sys_user.prototype.associate = function() {
-    app.model.Sys_user.hasMany(app.model.Sys_user_role, { as: 'sys_user_role' });
+    app.model.Sys_user.belongsToMany(app.model.Sys_role, { through: app.model.Sys_user_role,as: 'sys_user' ,constraints: false});
   };
   return Sys_user;
 };

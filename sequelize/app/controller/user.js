@@ -34,7 +34,7 @@ class UserController extends Controller {
   async destroy() {
     const ctx = this.ctx;
     const id = ctx.helper.parseInt(ctx.params.id);
-    await ctx.service.user.del(id);
+    await ctx.service.user.delete(id);
     ctx.status = 200;
   }
 }

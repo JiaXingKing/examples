@@ -2,12 +2,13 @@
 
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-    const { INTEGER, DATE, STRING,BOOLEAN, NOW  } = Sequelize;
+    const { INTEGER, DATE, STRING,BOOLEAN, NOW ,UUID,UUIDV4 } = Sequelize;
     await queryInterface.createTable('sys_org', {
       id: {
-        type: STRING,
+        type: UUID                        ,
         primaryKey: true,
-        allowNull: false
+        allowNull: false,
+        defaultValue: UUIDV4
       },
       enName: STRING(30),
       chName: STRING(30),
@@ -30,16 +31,16 @@ module.exports = {
         type:INTEGER,
         defaultValue: 0
       },
-      created_at: {
+      createdAt: {
         type: DATE,
         defaultValue: NOW
       },
-      create_by: STRING(30),
-      updated_at: {
+      createBy: STRING(30),
+      updatedAt: {
         type: DATE,
         defaultValue: NOW
       },
-      updated_by: STRING(30)
+      updatedBy: STRING(30)
     });
   },
 

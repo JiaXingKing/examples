@@ -1,13 +1,14 @@
 "use strict";
 
 module.exports = (app) => {
-  const { STRING} = app.Sequelize;
+  const { STRING,UUID,UUIDV4} = app.Sequelize;
 
   const Sys_role_route = app.model.define("sys_role_route", {
     id:{
-      type: STRING,
+      type: UUID                        ,
       primaryKey: true,
-      allowNull: false
+      allowNull: false,
+      defaultValue: UUIDV4
     },
     routeId: {
       type: STRING,
@@ -17,10 +18,10 @@ module.exports = (app) => {
       type: STRING,
       allowNull: false
     },
+  }  ,{
+    freezeTableName: true,
+    tableName: 'sys_role_route',
+    underscored: false
   });
-  Sys_role_route.prototype.associate = function() {
-    app.model.Sys_role_route.belongsTo(app.model.Sys_route, { as: 'sys_route', foreignKey: 'routeId' });
-    app.model.Sys_role_route.belongsTo(app.model.Sys_role, { as: 'sys_role', foreignKey: 'roleId' });
-  };
   return Sys_role_route;
 };

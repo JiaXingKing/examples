@@ -2,12 +2,13 @@
 
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-    const { STRING  } = Sequelize;
+    const { STRING,UUID,UUIDV4  } = Sequelize;
     await queryInterface.createTable('sys_user_role', {
       id:{
-        type: STRING,
+        type: UUID                        ,
         primaryKey: true,
-        allowNull: false
+        allowNull: false,
+        defaultValue: UUIDV4
       },
       userId: {
         type: STRING,

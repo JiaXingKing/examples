@@ -1,13 +1,14 @@
-'use strict';
+"use strict";
 
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-    const { INTEGER, DATE, STRING,BOOLEAN, NOW  } = Sequelize;
-    await queryInterface.createTable('sys_user', {
+    const { STRING, INTEGER, DATE, BOOLEAN, NOW, UUID, UUIDV4 } = Sequelize;
+    await queryInterface.createTable("sys_user", {
       id: {
-        type: STRING,
+        type: UUID,
         primaryKey: true,
-        allowNull: false
+        allowNull: false,
+        defaultValue: UUIDV4
       },
       accountName: STRING(30),
       actualName: STRING(30),
@@ -18,24 +19,24 @@ module.exports = {
       },
       passWord: {
         type: STRING(30),
-        defaultValue: '123456'
+        defaultValue: "123456"
       },
       age: INTEGER,
       phone: STRING(30),
-      created_at: {
+      createdAt: {
         type: DATE,
         defaultValue: NOW
       },
-      create_by: STRING(30),
-      updated_at: {
+      createBy: STRING(30),
+      updatedAt: {
         type: DATE,
         defaultValue: NOW
       },
-      updated_by: STRING(30)
+      updatedBy: STRING(30)
     });
   },
 
-  down: async  (queryInterface, Sequelize) => {
-    await queryInterface.dropTable('sys_user');
+  down: async (queryInterface, Sequelize) => {
+    await queryInterface.dropTable("sys_user");
   }
 };

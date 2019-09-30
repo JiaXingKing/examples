@@ -4,15 +4,15 @@ const Service = require('egg').Service;
 
 class User extends Service {
   async list({ offset = 0, limit = 10 }) {
-    return this.ctx.model.User.findAndCountAll({
+    return this.ctx.model.SysUser.findAndCountAll({
       offset,
       limit,
-      order: [[ 'created_at', 'desc' ], [ 'id', 'desc' ]],
+      order: [[ 'createdAt', 'desc' ], [ 'accountName', 'desc' ]],
     });
   }
 
   async find(id) {
-    const user = await this.ctx.model.User.findByPk(id);
+    const user = await this.ctx.model.SysUser.findByPk(id);
     if (!user) {
       this.ctx.throw(404, 'user not found');
     }
@@ -20,19 +20,19 @@ class User extends Service {
   }
 
   async create(user) {
-    return this.ctx.model.User.create(user);
+    return this.ctx.model.SysUser.create(user);
   }
 
   async update({ id, updates }) {
-    const user = await this.ctx.model.User.findByPk(id);
+    const user = await this.ctx.model.SysUser.findByPk(id);
     if (!user) {
       this.ctx.throw(404, 'user not found');
     }
     return user.update(updates);
   }
 
-  async del(id) {
-    const user = await this.ctx.model.User.findByPk(id);
+  async delete(id) {
+    const user = await this.ctx.model.SysUser.findByPk(id);
     if (!user) {
       this.ctx.throw(404, 'user not found');
     }

@@ -1,13 +1,14 @@
 "use strict";
 
 module.exports = (app) => {
-  const { STRING, INTEGER, DATE, BOOLEAN, NOW } = app.Sequelize;
+  const { STRING, INTEGER, DATE, BOOLEAN, NOW,UUID,UUIDV4} = app.Sequelize;
 
   const Sys_org = app.model.define("sys_org", {
     id: {
-      type: STRING,
+      type: UUID                        ,
       primaryKey: true,
-      allowNull: false
+      allowNull: false,
+      defaultValue: UUIDV4
     },
     enName: STRING(30),
     chName: STRING(30),
@@ -30,17 +31,23 @@ module.exports = (app) => {
       type:INTEGER,
       defaultValue: 0
     },
-    created_at: {
+    createdAt: {
       type: DATE,
       defaultValue: NOW
     },
-    create_by: STRING(30),
-    updated_at: {
+    createBy: STRING(30),
+    updatedAt: {
       type: DATE,
       defaultValue: NOW
     },
-    updated_by: STRING(30)
-  });
+    updatedBy: STRING(30)
+  },
+  {
+    freezeTableName: true,
+    tableName: 'sys_org',
+    underscored: false
+  }
+  );
   Sys_org.prototype.associate = function() {
     app.model.Sys_org.hasMany(app.model.Sys_role, { as: 'sys_role' });
   };

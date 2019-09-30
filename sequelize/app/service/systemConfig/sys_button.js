@@ -3,26 +3,22 @@
 module.exports = (app) => {
   const { STRING, INTEGER, DATE, BOOLEAN, NOW,UUID,UUIDV4 } = app.Sequelize;
 
-  const Sys_user = app.model.define("sys_user", {
+  const Sys_button = app.model.define("sys_button", {
     id: {
       type: UUID                        ,
       primaryKey: true,
       allowNull: false,
       defaultValue: UUIDV4
     },
-    accountName: STRING(30),
-    actualName: STRING(30),
-    Sex: STRING(30),
+    domId: STRING(30),
+    des: STRING(30),
+    sortNo: INTEGER,
     status: {
       type: BOOLEAN,
       defaultValue: true
     },
-    passWord: {
-      type: STRING(30),
-      defaultValue: '123456'
-    },
-    age: INTEGER,
-    phone: STRING(30),
+    routeId:STRING(30),
+    roleId:STRING(30),
     createdAt: {
       type: DATE,
       defaultValue: NOW
@@ -33,14 +29,14 @@ module.exports = (app) => {
       defaultValue: NOW
     },
     updatedBy: STRING(30)
-  },{
-    timestamps: false,
+  } ,{
     freezeTableName: true,
-    tableName: 'sys_user',
+    tableName: 'sys_button',
     underscored: false
   });
-  Sys_user.prototype.associate = function() {
-    app.model.Sys_user.belongsToMany(app.model.Sys_role, { through: app.model.Sys_user_role,as: 'sys_user' ,constraints: false});
+  Sys_button.prototype.associate = function() {
+    app.model.Sys_button.belongsTo(app.model.Sys_route, { as: 'sys_button' ,foreignKey: "routeId"});
+    app.model.Sys_button.belongsTo(app.model.Sys_role, { as: 'sys_button' ,foreignKey: "roleId"});
   };
-  return Sys_user;
+  return Sys_button;
 };

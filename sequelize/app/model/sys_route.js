@@ -39,12 +39,14 @@ module.exports = (app) => {
     },
     updatedBy: STRING(30)
   },{
+    timestamps: false,
     freezeTableName: true,
     tableName: 'sys_route',
     underscored: false
   });
   Sys_route.prototype.associate = function() {
     app.model.Sys_route.belongsToMany(app.model.Sys_role, { through: app.model.Sys_role_route,as: 'sys_route' ,constraints: false});
+    app.model.Sys_route.hasMany(app.model.Sys_button, { as: 'sys_button' });
   };
   return Sys_route;
 };

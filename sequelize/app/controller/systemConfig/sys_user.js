@@ -9,17 +9,17 @@ class UserController extends Controller {
       limit: ctx.helper.parseInt(ctx.query.limit),
       offset: ctx.helper.parseInt(ctx.query.offset),
     };
-    ctx.body = await ctx.service.user.list(query);
+    ctx.body = await ctx.service.systemConfig.sysUser.list(query);
   }
 
   async show() {
     const ctx = this.ctx;
-    ctx.body = await ctx.service.user.find(ctx.helper.parseInt(ctx.params.id));
+    ctx.body = await ctx.service.systemConfig.sysUser.find(ctx.helper.parseInt(ctx.params.id));
   }
 
   async create() {
     const ctx = this.ctx;
-    const user = await ctx.service.user.create(ctx.request.body);
+    const user = await ctx.service.systemConfig.sysUser.create(ctx.request.body);
     ctx.status = 201;
     ctx.body = user;
   }
@@ -28,13 +28,13 @@ class UserController extends Controller {
     const ctx = this.ctx;
     const id = ctx.helper.parseInt(ctx.params.id);
     const body = ctx.request.body;
-    ctx.body = await ctx.service.user.update({ id, updates: body });
+    ctx.body = await ctx.service.systemConfig.sysUser.update({ id, updates: body });
   }
 
   async destroy() {
     const ctx = this.ctx;
     const id = ctx.helper.parseInt(ctx.params.id);
-    await ctx.service.user.delete(id);
+    await ctx.service.systemConfig.sysUser.delete(id);
     ctx.status = 200;
   }
 }

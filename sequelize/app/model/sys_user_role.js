@@ -19,6 +19,7 @@ module.exports = (app) => {
       allowNull: false
     },
   },{
+    timestamps: false,
     freezeTableName: true,
     tableName: 'sys_user_role',
     underscored: false

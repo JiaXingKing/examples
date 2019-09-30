@@ -43,7 +43,6 @@ module.exports = (app) => {
     updatedBy: STRING(30)
   },
   {
-    timestamps: false,
     freezeTableName: true,
     tableName: 'sys_org',
     underscored: false

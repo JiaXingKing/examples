@@ -38,6 +38,13 @@ class User extends Service {
     }
     return user.destroy();
   }
+  async getAllInfo(id) {
+    const user = await this.ctx.model.SysUser.findByPk(id);
+    if (!user) {
+      this.ctx.throw(404, 'user not found');
+    }
+    return user.destroy();
+  }
 }
 
 module.exports = User;

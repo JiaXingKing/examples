@@ -28,6 +28,7 @@ module.exports = (app) => {
     },
     updatedBy: STRING(30)
   } ,{
+    timestamps: false,
     freezeTableName: true,
     tableName: 'sys_role',
     underscored: false
@@ -36,6 +37,7 @@ module.exports = (app) => {
     app.model.Sys_role.belongsToMany(app.model.Sys_user, { through: app.model.Sys_user_role,as: 'sys_role' ,constraints: false});
     app.model.Sys_role.belongsToMany(app.model.Sys_route, { through: app.model.Sys_role_route,as: 'sys_role' ,constraints: false});
     app.model.Sys_role.belongsTo(app.model.Sys_org, { as: 'sys_org' , foreignKey: 'orgId' });
+    app.model.Sys_role.hasMany(app.model.Sys_button, { as: 'sys_button' });
   };
   return Sys_role;
 };

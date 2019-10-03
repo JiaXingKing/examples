@@ -1,55 +1,42 @@
-"use strict";
+'use strict';
 
-module.exports = (app) => {
-  const { STRING, INTEGER, DATE, BOOLEAN, NOW,UUID,UUIDV4} = app.Sequelize;
+const Service = require('egg').Service;
 
-  const Sys_org = app.model.define("sys_org", {
-    id: {
-      type: UUID                        ,
-      primaryKey: true,
-      allowNull: false,
-      defaultValue: UUIDV4
-    },
-    enName: STRING(30),
-    chName: STRING(30),
-    status: {
-      type: BOOLEAN,
-      defaultValue: true
-    },
-    isLeaf: {
-      type: BOOLEAN,
-    },
-    customCode:STRING(30),
-    sortNo:{
-      type:INTEGER,
-      defaultValue: 0
-    },
-    parentId:{
-      type: STRING,
-    },
-    level:{
-      type:INTEGER,
-      defaultValue: 0
-    },
-    createdAt: {
-      type: DATE,
-      defaultValue: NOW
-    },
-    createBy: STRING(30),
-    updatedAt: {
-      type: DATE,
-      defaultValue: NOW
-    },
-    updatedBy: STRING(30)
-  },
-  {
-    freezeTableName: true,
-    tableName: 'sys_org',
-    underscored: false
+class Org extends Service {
+  async list({ offset = 0, limit = 10 }) {
+    return this.ctx.model.SysOrg.findAndCountAll({
+      offset,
+      limit,
+    });
   }
-  );
-  Sys_org.prototype.associate = function() {
-    app.model.Sys_org.hasMany(app.model.Sys_role, { as: 'sys_role' });
-  };
-  return Sys_org;
-};
+
+  async find(id) {
+    const org = await this.ctx.model.SysOrg.findByPk(id);
+    if (!org) {
+      this.ctx.throw(404, 'prey not found');
+    }
+    return org;
+  }
+
+  async create(org) {
+    return this.ctx.model.SysOrg.create(org);
+  }
+
+  async update({ id, updates }) {
+    const org = await this.ctx.model.SysOrg.findByPk(id);
+    if (!org) {
+      this.ctx.throw(404, 'prey not found');
+    }
+    return org.update(updates);
+  }
+
+  async delete(id) {
+    const org = await this.ctx.model.SysOrg.findByPk(id);
+    if (!org) {
+      this.ctx.throw(404, 'prey not found');
+    }
+    return org.destroy();
+  }
+}
+
+module.exports = Org;

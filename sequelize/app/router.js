@@ -7,4 +7,6 @@ module.exports = app => {
   app.resources('routes', '/routes', app.controller.systemConfig.sysRoute);
   app.resources('roles', '/roles', app.controller.systemConfig.sysRole);
   app.resources('roleRoutes', '/roleRoutes', app.controller.systemConfig.sysRoleRoute);
+  app.resources('orgs', '/orgs', app.controller.systemConfig.sysOrg);
+  app.resources('buttons', '/buttons', app.controller.systemConfig.sysButton);
 };

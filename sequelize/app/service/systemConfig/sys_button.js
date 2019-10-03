@@ -1,42 +1,42 @@
-"use strict";
+'use strict';
 
-module.exports = (app) => {
-  const { STRING, INTEGER, DATE, BOOLEAN, NOW,UUID,UUIDV4 } = app.Sequelize;
+const Service = require('egg').Service;
 
-  const Sys_button = app.model.define("sys_button", {
-    id: {
-      type: UUID                        ,
-      primaryKey: true,
-      allowNull: false,
-      defaultValue: UUIDV4
-    },
-    domId: STRING(30),
-    des: STRING(30),
-    sortNo: INTEGER,
-    status: {
-      type: BOOLEAN,
-      defaultValue: true
-    },
-    routeId:STRING(30),
-    roleId:STRING(30),
-    createdAt: {
-      type: DATE,
-      defaultValue: NOW
-    },
-    createBy: STRING(30),
-    updatedAt: {
-      type: DATE,
-      defaultValue: NOW
-    },
-    updatedBy: STRING(30)
-  } ,{
-    freezeTableName: true,
-    tableName: 'sys_button',
-    underscored: false
-  });
-  Sys_button.prototype.associate = function() {
-    app.model.Sys_button.belongsTo(app.model.Sys_route, { as: 'sys_button' ,foreignKey: "routeId"});
-    app.model.Sys_button.belongsTo(app.model.Sys_role, { as: 'sys_button' ,foreignKey: "roleId"});
-  };
-  return Sys_button;
-};
+class Button extends Service {
+  async list({ offset = 0, limit = 10 }) {
+    return this.ctx.model.SysButton.findAndCountAll({
+      offset,
+      limit,
+    });
+  }
+
+  async find(id) {
+    const button = await this.ctx.model.SysButton.findByPk(id);
+    if (!button) {
+      this.ctx.throw(404, 'prey not found');
+    }
+    return button;
+  }
+
+  async create(button) {
+    return this.ctx.model.SysButton.create(button);
+  }
+
+  async update({ id, updates }) {
+    const button = await this.ctx.model.SysButton.findByPk(id);
+    if (!button) {
+      this.ctx.throw(404, 'prey not found');
+    }
+    return button.update(updates);
+  }
+
+  async delete(id) {
+    const button = await this.ctx.model.SysButton.findByPk(id);
+    if (!button) {
+      this.ctx.throw(404, 'prey not found');
+    }
+    return button.destroy();
+  }
+}
+
+module.exports = Button;

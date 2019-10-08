@@ -14,7 +14,19 @@ module.exports = {
       enName: STRING(30),
       chName: STRING(30),
       isLeaf: {
+        type: BOOLEAN
+      },
+      isHidden: {
         type: BOOLEAN,
+        defaultValue: false
+      },
+      noCache: {
+        type: BOOLEAN,
+        defaultValue: false
+      },
+      breadcrumb: {
+        type: BOOLEAN,
+        defaultValue: true
       },
       customCode:STRING(30),
       sortNo:{

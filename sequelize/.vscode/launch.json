@@ -12,13 +12,12 @@
             "runtimeArgs": [
                 "run",
                 "debug",
-                "--",
-                "--inspect-brk"
+
             ],
             "console": "integratedTerminal",
             "restart": true,
             "protocol": "auto",
-            "port": 9999,
+            "port": 9230,
             "autoAttachChildProcesses": true
         },
         {

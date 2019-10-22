@@ -5,9 +5,11 @@
   "private": true,
   "dependencies": {
     "egg": "^2.10.0",
+    "egg-cors": "^2.2.0",
+    "egg-development-proxyworker": "^1.2.0",
     "egg-sequelize": "^5.0.1",
-    "mysql2": "^1.6.1",
-    "jsonwebtoken":"^8.5.0"
+    "jsonwebtoken": "^8.5.0",
+    "mysql2": "^1.6.1"
   },
   "devDependencies": {
     "autod": "^3.0.1",

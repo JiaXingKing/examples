@@ -1,27 +1,23 @@
-'use strict';
+"use strict";
 
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-    const { STRING,UUID,UUIDV4  } = Sequelize;
-    await queryInterface.createTable('sys_user_role', {
-      id:{
-        type: UUID                        ,
-        primaryKey: true,
-        allowNull: false,
-        defaultValue: UUIDV4
-      },
+    const { STRING, UUID, UUIDV4 } = Sequelize;
+    await queryInterface.createTable("sys_user_role", {
       userId: {
-        type: STRING,
-        allowNull: false
+        type: UUID,
+        allowNull: false,
+        primaryKey: true
       },
       roleId: {
-        type: STRING,
-        allowNull: false
-      },
+        type: UUID,
+        allowNull: false,
+        primaryKey: true
+      }
     });
   },
 
-  down: async  (queryInterface, Sequelize) => {
-    await queryInterface.dropTable('sys_user_role');
+  down: async (queryInterface, Sequelize) => {
+    await queryInterface.dropTable("sys_user_role");
   }
 };
